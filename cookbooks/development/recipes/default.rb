@@ -15,3 +15,18 @@ package 'vim' do
   action :install
 end
 
+package 'libtool' do
+  action :install
+end
+
+package 'm4' do
+  action :install
+end
+
+package 'autoconf' do
+  action :install
+end
+
+package 'texinfo' do
+  action :install
+end
