@@ -35,14 +35,6 @@ package 'texinfo' do
   action :install
 end
 
-directory "~/llvm" do
-  owner "vagrant"
-  group "vagrant"
-  recursive true
-  mode 0755
-  action :create
-end
-
 remote_file "/tmp/llvm-3.7.0.src.tar.xz" do
   source "http://llvm.org/releases/3.7.0/llvm-3.7.0.src.tar.xz"
 end
@@ -64,6 +56,7 @@ script "install llvm" do
   interpreter "bash"
   user        "vagrant"
   code <<-EOL
+    mkdir #{llvm_dir}
     tar Jxf /tmp/llvm-3.7.0.src.tar.xz -C #{llvm_dir}
     mkdir #{clang_dir}
     tar Jxf /tmp/cfe-3.7.0.src.tar.xz -C #{clang_dir}
