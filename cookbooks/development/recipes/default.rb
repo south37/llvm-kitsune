@@ -15,6 +15,10 @@ package 'vim' do
   action :install
 end
 
+package 'g++' do
+  action :install
+end
+
 package 'libtool' do
   action :install
 end
