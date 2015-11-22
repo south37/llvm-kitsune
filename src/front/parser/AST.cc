@@ -107,3 +107,20 @@ public:
   }
 };
 
+/**
+ * Jump AST
+ */
+class JumpStmtAST : public BaseAST {
+private:
+  BaseAST *Expr;
+
+public:
+  JumpStmtAST(BaseAST *expr) : BaseAST(JumpStmtID), Expr(expr) {}
+  ~JumpStmtAST() { SAFE_DELETE(Expr); }
+  static inline bool classof(JumpStmtAST const*) { return true; }
+  static inline bool classof(BaseAST const* base) {
+    return base->getValueID() == JumpStmtID;
+  }
+  BaseAST *getExpr() { return Expr; }
+};
+
