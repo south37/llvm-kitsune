@@ -139,5 +139,21 @@ public:
     return base->getValueID() == VariableID;
   }
   std::string getName() { return Name; }
-}
+};
 
+/**
+ * Number AST
+ */
+class NumberAST : public BaseAST {
+private:
+  int Val;
+
+public:
+  NumberAST(int val) : BaseAST(NumberID), Val(val) {}
+  ~NumberAST() {}
+  static inline bool classof(NumberAST const*) { return true; }
+  static inline bool classof(BaseAST const* base) {
+    return base->getValueID() == NumberID;
+  }
+  int getNumberValue() { return Val; }
+};
