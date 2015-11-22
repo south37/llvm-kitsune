@@ -158,3 +158,105 @@ public:
   }
   int getNumberValue() { return Val; }
 };
+
+/**
+ * Prototype AST
+ */
+class PrototypeAST {
+private:
+  std::string Name;
+  std::vector<std::string> Params;
+
+public:
+  PrototypeAST(const std::string &name, const std::vector<std::string> &params)
+    : Name(name), Params(params) {}
+  std::string getName() { return Name; }
+  std::string getParamName(int i) {
+    if (i < Params.size()) {
+      return Params[i];
+    } else {
+      return NULL;
+    }
+  }
+  int getParamNum() { return Params.size(); }
+};
+
+/**
+ * Function Body AST
+ */
+class FunctionStmtAST {
+private:
+  std::vector<VariableDeclAST*> VariableDecls;
+  std::vector<BaseAST*> StmtLists;
+
+public:
+  FunctionStmtAST() {}
+  ~FunctionStmtAST() {}
+  bool addVariableDeclaration(VariableDeclAST *vdecl);
+  bool addStatement(BaseAST *stmt) {
+    StmtLists.push_back(stmt);
+    return true;
+  }
+  VariableDeclAST *getVariableDecl(int i) {
+    if (i < VariableDecls.size()) {
+      return VariableDecls[i];
+    } else {
+      return nullptr;
+    }
+  }
+  BaseAST *getStatement(int i) {
+    if (i < StmtLists.size()) {
+      return StmtLists[i];
+    } else {
+      return nullptr;
+    }
+  }
+};
+
+/**
+ * Function AST
+ */
+class FunctionAST {
+private:
+  PrototypeAST *Proto;
+  FunctionStmtAST *Body;
+
+public:
+  FunctionAST(PrototypeAST *proto, FunctionStmtAST *body)
+    : Proto(proto), Body(body) {}
+  ~FunctionAST();
+  std::string getName() { return Proto->getName(); }
+  PrototypeAST *getPrototype() { return Proto; }
+  FunctionStmtAST *getBody() { return Body; }
+};
+
+/**
+ * Whole Sorce Code AST
+ */
+class TranslationUnitAST {
+private:
+  std::vector<PrototypeAST*> Prototypes;
+  std::vector<FunctionAST*> Functions;
+
+public:
+  TranslationUnitAST() {}
+  ~TranslationUnitAST() {}
+  bool addPrototype(PrototypeAST *proto);
+  bool addFunction(FunctionAST *func);
+  bool empty();
+  PrototypeAST *getPrototype(int i) {
+    if (i < Prototypes.size()) {
+      return Prototypes[i];
+    } else {
+      return nullptr;
+    }
+  }
+  FunctionAST *getFunction(int i) {
+    if (i < Functions.size()) {
+      return Functions[i];
+    } else {
+      return nullptr;
+    }
+  }
+};
+
