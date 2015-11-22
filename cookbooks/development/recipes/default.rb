@@ -35,36 +35,40 @@ package 'texinfo' do
   action :install
 end
 
-remote_file "/tmp/llvm-3.7.0.src.tar.xz" do
-  source "http://llvm.org/releases/3.7.0/llvm-3.7.0.src.tar.xz"
+llvm_32 = "http://llvm.org/releases/3.2/"
+llvm = "llvm-3.2.src.tar.gz"
+clang = "clang-3.2.src.tar.gz"
+compiler_rt = "compiler-rt-3.2.src.tar.gz"
+remote_file "/tmp/#{llvm}" do
+  source "#{llvm_32}#{llvm}"
 end
 
-remote_file "/tmp/cfe-3.7.0.src.tar.xz" do
-  source "http://llvm.org/releases/3.7.0/cfe-3.7.0.src.tar.xz"
+remote_file "/tmp/#{clang}" do
+  source "#{llvm_32}#{clang}"
 end
 
-remote_file "/tmp/compiler-rt-3.7.0.src.tar.xz" do
-  source "http://llvm.org/releases/3.7.0/compiler-rt-3.7.0.src.tar.xz"
+remote_file "/tmp/#{compiler_rt}" do
+  source "#{llvm_32}#{compiler_rt}"
 end
 
 home_dir = "/home/vagrant"
 llvm_dir = "#{home_dir}/llvm"
-clang_dir = "#{llvm_dir}/llvm-3.7.0.src/tools/clang/"
-compiler_rt_dir = "#{llvm_dir}/llvm-3.7.0.src/projects/compiler-rt/"
+clang_dir = "#{llvm_dir}/llvm-3.2.src/tools/clang/"
+compiler_rt_dir = "#{llvm_dir}/llvm-3.2.src/projects/compiler-rt/"
 build_dir = "#{llvm_dir}/llvm-build"
 script "install llvm" do
   interpreter "bash"
   user        "vagrant"
   code <<-EOL
     mkdir #{llvm_dir}
-    tar Jxf /tmp/llvm-3.7.0.src.tar.xz -C #{llvm_dir}
+    tar xzf /tmp/#{llvm} -C #{llvm_dir}
     mkdir #{clang_dir}
-    tar Jxf /tmp/cfe-3.7.0.src.tar.xz -C #{clang_dir}
+    tar xzf /tmp/#{clang} -C #{clang_dir}
     mkdir #{compiler_rt_dir}
-    tar Jxf /tmp/compiler-rt-3.7.0.src.tar.xz -C #{compiler_rt_dir}
+    tar xzf /tmp/#{compiler_rt} -C #{compiler_rt_dir}
     mkdir #{build_dir}
     cd #{build_dir}
-    ../llvm-3.7.0.src/configure --prefix=/usr/local/llvm --enable-optimized
+    ../llvm-3.2.src/configure --prefix=/usr/local/llvm --enable-optimized
     make -j2
     make check
     sudo make install
