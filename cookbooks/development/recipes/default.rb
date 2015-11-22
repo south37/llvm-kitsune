@@ -72,5 +72,6 @@ script "install llvm" do
     make -j2
     make check
     sudo make install
+    echo 'export PATH=$PATH:/usr/local/llvm/bin' >> ~/.bashrc
   EOL
 end
