@@ -1,7 +1,7 @@
 #include <vector>
 #include <iostream>
 #include "./Token.cc"
-#include "./APP.h"
+#include "../APP.h"
 
 class TokenStream {
 private:
