@@ -52,15 +52,15 @@ remote_file "/tmp/#{compiler_rt}" do
 end
 
 home_dir = "/home/vagrant"
-llvm_dir = "#{home_dir}/llvm"
-clang_dir = "#{llvm_dir}/llvm-3.2.src/tools/clang/"
-compiler_rt_dir = "#{llvm_dir}/llvm-3.2.src/projects/compiler-rt/"
+llvm_dir = "#{home_dir}/llvm/llvm-3.2.src"
+clang_dir = "#{llvm_dir}/tools/clang/"
+compiler_rt_dir = "#{llvm_dir}/projects/compiler-rt/"
 build_dir = "#{llvm_dir}/llvm-build"
 script "install llvm" do
   interpreter "bash"
   user        "vagrant"
   code <<-EOL
-    mkdir #{llvm_dir}
+    mkdir -p #{llvm_dir}
     tar xzf /tmp/#{llvm} -C #{llvm_dir}
     mkdir #{clang_dir}
     tar xzf /tmp/#{clang} -C #{clang_dir}
