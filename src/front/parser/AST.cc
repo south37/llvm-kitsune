@@ -124,3 +124,20 @@ public:
   BaseAST *getExpr() { return Expr; }
 };
 
+/**
+ * Variable AST
+ */
+class VariableAST : public BaseAST {
+private:
+  std::string Name;
+
+public:
+  VariableAST(const std::string &name) : BaseAST(VariableID), Name(name) {}
+  ~VariableAST() {}
+  static inline bool classof(VariableAST const*) { return true; }
+  static inline bool classof(BaseAST const* base) {
+    return base->getValueID() == VariableID;
+  }
+  std::string getName() { return Name; }
+}
+
