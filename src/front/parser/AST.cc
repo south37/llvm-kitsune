@@ -91,7 +91,7 @@ private:
   std::vector<BaseAST*> Args;
 
 public:
-  CallExprAST(const std::string &callee, std::vecotr<BaseAST*> &args)
+  CallExprAST(const std::string &callee, std::vector<BaseAST*> &args)
     : BaseAST(CallExprID), Callee(callee), Args(args) { }
   ~CallExprAST();
   static inline bool classof(CallExprAST const*) { return true; }
